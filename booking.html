@@ -47,20 +47,21 @@
             box-shadow: 0 15px 50px rgba(0,0,0,0.05); border: 1px solid #eee;
         }
 
-        form { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        form { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; } /* Increased desktop gap */
         .full-width { grid-column: span 2; }
 
-        label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 0.85rem; text-transform: uppercase; color: #555; }
+        .form-group { display: flex; flex-direction: column; }
+        label { display: block; margin-bottom: 10px; font-weight: 600; font-size: 0.85rem; text-transform: uppercase; color: #555; }
         input, select, textarea { 
-            width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; 
-            font-family: 'Poppins', sans-serif; font-size: 0.95rem;
+            width: 100%; padding: 14px; border: 1px solid #ddd; border-radius: 10px; 
+            font-family: 'Poppins', sans-serif; font-size: 1rem; background: #fafafa;
         }
-        textarea { height: 100px; resize: none; }
+        textarea { height: 120px; resize: none; }
 
         .btn-booking { 
             grid-column: span 2; background: var(--magenta); color: white; 
-            padding: 15px; border: none; border-radius: 50px; 
-            font-weight: 600; font-size: 1rem; cursor: pointer; transition: 0.3s; margin-top: 10px;
+            padding: 18px; border: none; border-radius: 50px; 
+            font-weight: 600; font-size: 1.1rem; cursor: pointer; transition: 0.3s; margin-top: 15px;
         }
         .btn-booking:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(209, 0, 116, 0.3); }
 
@@ -73,13 +74,23 @@
 
         footer { background: var(--dark); color: white; padding: 40px 10%; text-align: center; margin-top: 60px; }
 
+        /* --- MOBILE SPACING FIX --- */
         @media (max-width: 768px) {
             .nav-links { display: none; }
             .hamburger { display: flex; }
             .booking-section { padding: 40px 5%; }
-            form { grid-template-columns: 1fr; }
+            
+            form { 
+                display: flex; /* Switch to flex for easier stacking */
+                flex-direction: column; 
+                gap: 20px; /* Space between each input row */
+            }
+            
             .full-width { grid-column: span 1; }
-            .booking-card { padding: 25px; }
+            .booking-card { padding: 25px 20px; }
+            
+            label { font-size: 0.8rem; margin-bottom: 6px; }
+            input, select, textarea { padding: 12px; }
         }
     </style>
 </head>
