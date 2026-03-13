@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hair Portfolio | Debbie's Beauty - Oxford Mobile Hair Clinic</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root { 
+            --magenta: #D10074; 
+            --dark: #121212; 
+            --light: #fdf2f8; 
+            --white: #ffffff; 
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            line-height: 1.6; 
+            color: var(--dark); 
+            background: var(--white);
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            background: #fff; padding: 1rem 8%; 
+            display: flex; justify-content: space-between; align-items: center;
+            position: sticky; top: 0; z-index: 2000; box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .logo { font-family: 'Playfair Display', serif; color: var(--magenta); font-size: 1.5rem; font-weight: 700; text-decoration: none; }
+        .nav-links { display: flex; align-items: center; gap: 2rem; }
+        .nav-links a { text-decoration: none; color: var(--dark); font-weight: 500; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; }
+        .btn-nav { background: var(--magenta); color: white !important; padding: 0.7rem 1.5rem; border-radius: 50px; }
+
+        /* Filter Section */
+        .gallery-hero { padding: 60px 10% 20px; text-align: center; background: var(--light); }
+        .gallery-hero h1 { font-family: 'Playfair Display', serif; font-size: 3rem; margin-bottom: 10px; }
+        .gallery-hero p { color: var(--magenta); font-weight: 600; text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem; }
+
+        .filter-container { text-align: center; padding: 30px 0; background: #fff; position: sticky; top: 75px; z-index: 1000; box-shadow: 0 5px 15px rgba(0,0,0,0.02); }
+        .filter-btn {
+            background: none; border: 1px solid #ddd; padding: 10px 25px;
+            margin: 5px; cursor: pointer; border-radius: 30px; font-weight: 600;
+            transition: 0.3s; color: var(--dark); font-size: 0.85rem;
+        }
+        .filter-btn.active { background: var(--magenta); color: #fff; border-color: var(--magenta); box-shadow: 0 4px 12px rgba(209, 0, 116, 0.2); }
+
+        /* Gallery Grid */
+        .gallery-section { padding: 20px 8% 80px; }
+        .gallery-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); 
+            gap: 20px; 
+        }
+
+        .gallery-item { 
+            position: relative; border-radius: 15px; overflow: hidden; 
+            background: #f0f0f0; cursor: pointer; transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+        .gallery-item:hover { transform: scale(1.02); }
+        .gallery-item.hidden { display: none; }
+
+        .gallery-item img, .gallery-item video { 
+            width: 100%; height: 100%; object-fit: cover; display: block; aspect-ratio: 4/5; 
+        }
+
+        .media-tag {
+            position: absolute; bottom: 15px; right: 15px; background: rgba(255, 255, 255, 0.9);
+            color: var(--magenta); padding: 5px 12px; border-radius: 50px; font-size: 0.7rem; 
+            font-weight: 700; text-transform: uppercase; z-index: 5;
+        }
+
+        /* Lightbox */
+        .lightbox {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(18, 18, 18, 0.98); display: none; justify-content: center;
+            align-items: center; z-index: 3000; padding: 40px;
+        }
+        .lightbox.active { display: flex; }
+        .lightbox-content { max-width: 1000px; width: 100%; position: relative; }
+        .lightbox-content img, .lightbox-content video { width: 100%; border-radius: 12px; max-height: 85vh; object-fit: contain; }
+        .close-lightbox { position: absolute; top: -50px; right: 0; color: #fff; font-size: 45px; cursor: pointer; }
+
+        footer { background: var(--dark); color: white; padding: 60px 10%; text-align: center; }
+
+        @media (max-width: 768px) {
+            .gallery-hero h1 { font-size: 2.2rem; }
+            .gallery-grid { grid-template-columns: 1fr; }
+            .filter-container { top: 65px; overflow-x: auto; white-space: nowrap; padding: 15px 10%; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html" class="logo">DEBBIE'S BEAUTY</a>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="services.html">Services</a>
+            <a href="gallery.html">Gallery</a>
+            <a href="contact.html">Contact</a>
+            <a href="booking.html" class="btn-nav">Book Now</a>
+        </div>
+    </nav>
+
+    <header class="gallery-hero">
+        <p>The Hair Specialist</p>
+        <h1>Expert Hair Artistry</h1>
+    </header>
+
+    <div class="filter-container">
+        <button class="filter-btn active" data-filter="all">All Styles</button>
+        <button class="filter-btn" data-filter="braiding">Braiding</button>
+        <button class="filter-btn" data-filter="clinic">Hair Clinic</button>
+        <button class="filter-btn" data-filter="styling">Luxury Styling</button>
+    </div>
+
+    <section class="gallery-section">
+        <div class="gallery-grid">
+            <div class="gallery-item" data-category="braiding"><span class="media-tag">Video</span><video src="video 1.mp4" loop muted playsinline></video></div>
+            <div class="gallery-item" data-category="clinic"><span class="media-tag">Video</span><video src="video 2.mp4" loop muted playsinline></video></div>
+            <div class="gallery-item" data-category="styling"><span class="media-tag">Video</span><video src="video 3.mp4" loop muted playsinline></video></div>
+            <div class="gallery-item" data-category="braiding"><span class="media-tag">Video</span><video src="video 4.mp4" loop muted playsinline></video></div>
+            <div class="gallery-item" data-category="clinic"><span class="media-tag">Video</span><video src="video 5.mp4" loop muted playsinline></video></div>
+            <div class="gallery-item" data-category="styling"><span class="media-tag">Video</span><video src="video 6.mp4" loop muted playsinline></video></div>
+            <div class="gallery-item" data-category="braiding"><span class="media-tag">Video</span><video src="video 7.mp4" loop muted playsinline></video></div>
+            <div class="gallery-item" data-category="clinic"><span class="media-tag">Video</span><video src="video 8.mp4" loop muted playsinline></video></div>
+            <div class="gallery-item" data-category="styling"><span class="media-tag">Video</span><video src="video 9.mp4" loop muted playsinline></video></div>
+
+            <div class="gallery-item" data-category="braiding"><img src="image 1.jpeg" alt="Professional Braiding"></div>
+            <div class="gallery-item" data-category="clinic"><img src="image 2.jpeg" alt="Hair Clinic Results"></div>
+            <div class="gallery-item" data-category="styling"><img src="image 3.jpeg" alt="Luxury Hair Styling"></div>
+            <div class="gallery-item" data-category="braiding"><img src="image 4.jpeg" alt="Intricate Braids"></div>
+            <div class="gallery-item" data-category="clinic"><img src="image 5.jpeg" alt="Scalp Treatment"></div>
+            <div class="gallery-item" data-category="styling"><img src="image 6.jpeg" alt="Hair Transformation"></div>
+            <div class="gallery-item" data-category="braiding"><img src="image 7.jpeg" alt="Braid Extensions"></div>
+            <div class="gallery-item" data-category="clinic"><img src="image 8.jpeg" alt="Hair Growth Treatment"></div>
+            <div class="gallery-item" data-category="styling"><img src="image 9.jpeg" alt="Wedding Hair Style"></div>
+        </div>
+    </section>
+
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-content">
+            <span class="close-lightbox" id="closeLightbox">&times;</span>
+            <div id="lightboxMedia"></div>
+        </div>
+    </div>
+
+    <footer>
+        <p>DEBBIE'S BEAUTY | Oxford, UK</p>
+        <p style="font-size: 0.8rem; margin-top: 20px; opacity: 0.5;">&copy; 2026 Debbie's Beauty Ltd. | Oxford's Elite Mobile Hair Clinic</p>
+    </footer>
+
+    <script>
+        // 1. Filtering Logic
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const items = document.querySelectorAll('.gallery-item');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const filter = btn.getAttribute('data-filter');
+
+                items.forEach(item => {
+                    if (filter === 'all' || item.getAttribute('data-category') === filter) {
+                        item.classList.remove('hidden');
+                        item.style.opacity = '0';
+                        setTimeout(() => item.style.opacity = '1', 10);
+                    } else {
+                        item.classList.add('hidden');
+                    }
+                });
+            });
+        });
+
+        // 2. Video Hover Interaction
+        const videos = document.querySelectorAll('.gallery-item video');
+        videos.forEach(v => {
+            v.addEventListener('mouseenter', () => v.play());
+            v.addEventListener('mouseleave', () => { v.pause(); v.currentTime = 0; });
+        });
+
+        // 3. Lightbox Interaction
+        const lightbox = document.getElementById('lightbox');
+        const lightboxMedia = document.getElementById('lightboxMedia');
+        const closeBtn = document.getElementById('closeLightbox');
+
+        items.forEach(item => {
+            item.addEventListener('click', () => {
+                const media = item.querySelector('img, video').cloneNode(true);
+                if (media.tagName === 'VIDEO') {
+                    media.setAttribute('controls', '');
+                    media.muted = false;
+                    media.play();
+                }
+                lightboxMedia.innerHTML = '';
+                lightboxMedia.appendChild(media);
+                lightbox.classList.add('active');
+            });
+        });
+
+        closeBtn.addEventListener('click', () => {
+            lightbox.classList.remove('active');
+            lightboxMedia.innerHTML = '';
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                lightbox.classList.remove('active');
+                lightboxMedia.innerHTML = '';
+            }
+        });
+    </script>
+</body>
+</html>
