@@ -32,7 +32,25 @@
         .logo { font-family: 'Playfair Display', serif; color: var(--magenta); font-size: 1.5rem; font-weight: 700; text-decoration: none; }
         .nav-links { display: flex; align-items: center; gap: 2rem; }
         .nav-links a { text-decoration: none; color: var(--dark); font-weight: 500; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; }
+        .nav-links a:hover { color: var(--magenta); }
+        .nav-links a.active { color: var(--magenta); }
         .btn-nav { background: var(--magenta); color: white !important; padding: 0.7rem 1.5rem; border-radius: 50px; }
+
+        .hamburger { display: none; cursor: pointer; flex-direction: column; gap: 6px; z-index: 2001; }
+        .hamburger span { width: 28px; height: 2px; background: var(--dark); transition: 0.4s; }
+
+        .mobile-overlay {
+            position: fixed; top: 80px; right: -100%; 
+            width: 220px; background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px); z-index: 1500;
+            display: flex; flex-direction: column; padding: 25px; gap: 1rem;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border-radius: 15px; box-shadow: -5px 10px 30px rgba(0,0,0,0.1);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        .mobile-overlay.active { right: 20px; }
+        .mobile-overlay a { text-decoration: none; color: var(--dark); font-weight: 600; font-size: 1rem; padding-bottom: 8px; border-bottom: 1px solid #f5f5f5; }
+        .mobile-overlay a:last-child { border: none; color: var(--magenta); }
 
         /* Filter Section */
         .gallery-hero { padding: 60px 10% 20px; text-align: center; background: var(--light); }
@@ -82,11 +100,34 @@
         .lightbox.active { display: flex; }
         .lightbox-content { max-width: 1000px; width: 100%; position: relative; }
         .lightbox-content img, .lightbox-content video { width: 100%; border-radius: 12px; max-height: 85vh; object-fit: contain; }
-        .close-lightbox { position: absolute; top: -50px; right: 0; color: #fff; font-size: 45px; cursor: pointer; }
+        
+        #closeLightbox { 
+            position: absolute; 
+            top: 20px; 
+            right: 20px; 
+            color: var(--white); 
+            font-size: 35px; 
+            cursor: pointer; 
+            background: rgba(0, 0, 0, 0.5); 
+            width: 45px; 
+            height: 45px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            border-radius: 50%; 
+            transition: background 0.3s ease; 
+            z-index: 2501; 
+            line-height: 1; 
+        }
+        #closeLightbox:hover {
+            background: rgba(0, 0, 0, 0.8);
+        }
 
         footer { background: var(--dark); color: white; padding: 60px 10%; text-align: center; }
 
         @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hamburger { display: flex; }
             .gallery-hero h1 { font-size: 2.2rem; }
             .gallery-grid { grid-template-columns: 1fr; }
             .filter-container { top: 65px; overflow-x: auto; white-space: nowrap; padding: 15px 10%; }
@@ -99,12 +140,25 @@
         <a href="index.html" class="logo">DEBBIE'S BEAUTY</a>
         <div class="nav-links">
             <a href="index.html">Home</a>
+            <a href="gallery.html" class="active">Gallery</a>
             <a href="services.html">Services</a>
-            <a href="gallery.html">Gallery</a>
             <a href="contact.html">Contact</a>
             <a href="booking.html" class="btn-nav">Book Now</a>
         </div>
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
     </nav>
+
+    <div class="mobile-overlay" id="mobileOverlay">
+        <a href="index.html">Home</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="services.html">Services</a>
+        <a href="contact.html">Contact</a>
+        <a href="booking.html">Book Now</a>
+    </div>
 
     <header class="gallery-hero">
         <p>The Hair Specialist</p>
@@ -144,7 +198,7 @@
 
     <div class="lightbox" id="lightbox">
         <div class="lightbox-content">
-            <span class="close-lightbox" id="closeLightbox">&times;</span>
+            <span id="closeLightbox">&times;</span>
             <div id="lightboxMedia"></div>
         </div>
     </div>
@@ -155,7 +209,7 @@
     </footer>
 
     <script>
-        // 1. Filtering Logic
+        // 1. Filter Logic
         const filterBtns = document.querySelectorAll('.filter-btn');
         const items = document.querySelectorAll('.gallery-item');
 
@@ -213,6 +267,32 @@
                 lightbox.classList.remove('active');
                 lightboxMedia.innerHTML = '';
             }
+        });
+
+        const hamburger = document.getElementById('hamburger');
+        const mobileOverlay = document.getElementById('mobileOverlay');
+
+        hamburger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            mobileOverlay.classList.toggle('active');
+            const spans = hamburger.querySelectorAll('span');
+            if (mobileOverlay.classList.contains('active')) {
+                spans[0].style.transform = 'rotate(45deg) translate(5px, 6px)';
+                spans[1].style.opacity = '0';
+                spans[2].style.transform = 'rotate(-45deg) translate(5px, -6px)';
+            } else {
+                spans[0].style.transform = 'none';
+                spans[1].style.opacity = '1';
+                spans[2].style.transform = 'none';
+            }
+        });
+
+        window.addEventListener('click', () => {
+            mobileOverlay.classList.remove('active');
+            const spans = hamburger.querySelectorAll('span');
+            spans[0].style.transform = 'none';
+            spans[1].style.opacity = '1';
+            spans[2].style.transform = 'none';
         });
     </script>
 </body>

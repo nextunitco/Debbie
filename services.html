@@ -20,6 +20,8 @@
         .logo { font-family: 'Playfair Display', serif; color: var(--magenta); font-size: 1.5rem; font-weight: 700; text-decoration: none; }
         .nav-links { display: flex; align-items: center; gap: 2rem; }
         .nav-links a { text-decoration: none; color: var(--dark); font-weight: 500; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; }
+        .nav-links a:hover { color: var(--magenta); }
+        .nav-links a.active { color: var(--magenta); }
         .btn-nav { background: var(--magenta); color: white !important; padding: 0.7rem 1.5rem; border-radius: 50px; }
 
         .hamburger { display: none; cursor: pointer; flex-direction: column; gap: 6px; z-index: 2001; }
@@ -106,7 +108,7 @@
         <div class="nav-links">
             <a href="index.html">Home</a>
             <a href="gallery.html">Gallery</a>
-            <a href="services.html">Services</a>
+            <a href="services.html" class="active">Services</a>
             <a href="contact.html">Contact</a>
             <a href="booking.html" class="btn-nav">Book Now</a>
         </div>
@@ -159,7 +161,7 @@
                     <div class="tags"><span>Popular</span><span>•</span><span>Bespoke</span></div>
                 </div>
                 <div class="service-item">
-                    <h3>Custom Wig Making</h3>
+                    <h3>Luxury Braids</h3>
                     <p>High-quality wigs created specifically for your style and measurements.</p>
                     <div class="tags"><span>Luxury</span></div>
                 </div>
@@ -185,7 +187,7 @@
                     <div class="tags"><span>Artistic</span></div>
                 </div>
                 <div class="service-item">
-                    <h3>Spa Pedicure</h3>
+                    <h3>Pedicure and Manicure</h3>
                     <p>Complete foot care and polish in the comfort of your home.</p>
                     <div class="tags"><span>Relaxation</span></div>
                 </div>
